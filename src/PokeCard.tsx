@@ -1,16 +1,16 @@
 import { useEffect, useState, useCallback } from "react";
-
+import { PokeDeckProps } from "./PokeDeck";
 export interface Pokemon {
   name: string;
   image: string;
-  exp: string;
+  exp: number;
   id: string;
 }
 const generateRandomNumber = () => {
   return Math.floor(Math.random() * 50) + 1;
 };
 
-export const PokeCard = () => {
+export const PokeCard = (props: PokeDeckProps) => {
   const fetchPokemon = useCallback(async () => {
     try {
       const indice = generateRandomNumber().toString();
@@ -34,13 +34,16 @@ export const PokeCard = () => {
 
   const [data, setData] = useState<Pokemon>({
     name: "",
-    exp: "",
+    exp: 0,
     id: "",
     image: "",
   });
   useEffect(() => {
     fetchPokemon().then((res) => setData(res));
   }, []);
+  useEffect(() => {
+    if (data.exp !== 0) props.addScore(data.exp);
+  }, [data]);
   const imgURL = data.image;
   return (
     <div
@@ -49,6 +52,7 @@ export const PokeCard = () => {
         flexDirection: "column",
         border: "2px solid white",
         borderRadius: "20px",
+        margin: "4px",
       }}
     >
       <h3>{data.name}</h3>

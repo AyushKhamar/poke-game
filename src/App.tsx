@@ -1,10 +1,11 @@
 import "./App.css";
-import { PokeCard } from "./PokeCard";
+import { PokeDeck } from "./PokeDeck";
+import { PokeGame } from "./PokeGame";
 
 function App() {
   return (
     <>
-      <PokeCard />
+      <PokeGame />
     </>
   );
 }
